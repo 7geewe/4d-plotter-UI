@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,6 +16,12 @@ public class FunctionInputManager : MonoBehaviour
     {
         text2.ActivateInputField();
         //text2.caretBlinkRate = 1;
+
+        Debug.Log(CreateJaceExpr("xxx"));
+        Debug.Log(CreateJaceExpr("xxyy"));
+        Debug.Log(CreateJaceExpr("xxyyyyx"));
+        Debug.Log(CreateJaceExpr("xxyyyyyyyx"));
+        Debug.Log(CreateJaceExpr("xxyyyyyyyyyyyyyx"));
     }
 
     // Update is called once per frame
@@ -36,7 +43,7 @@ public class FunctionInputManager : MonoBehaviour
         text2.caretPosition += input.Length;
 
         //Test
-        text.text = ReplaceMathSymbols(temp);
+        text.text = CreateJaceExpr(temp);
     }
 
     public void CaretToLeft()
@@ -59,9 +66,35 @@ public class FunctionInputManager : MonoBehaviour
         }
     }
 
-    private string ReplaceMathSymbols(string expr)
+    private string CreateJaceExpr(string expr)
     {
-        return expr.Replace("√", "sqrt");
+        //stille Mulitplikation ermöglichen // Sonderfall ')'
+        char[] blocks = {'x', 'y', 'z', 'e', 'π',
+                           's', 'c', 't', 'l', '√'};
+
+        char[] operands = { '+', '-', '*', '/', '^', '.', '('};
+
+        int end = expr.Length;
+        for (int i = end; i > 1; i--)
+        {
+            char c = expr[i-1];
+            if (blocks.Contains(c) && !operands.Contains(expr[i-2]) && expr[i - 2] != 'o') //dritter fall für cos sonderfall
+            {
+                expr = expr.Insert(i-1, "*");
+            }
+            if (c == ')' && i != end && !operands.Contains(expr[i])) //für fälle wie 'cos(3)x -> cos(3)*x
+            {
+                expr = expr.Insert(i, "*");
+            }
+        }
+
+
+
+        if (expr[0] == '-') expr = expr.Insert(1, "1*"); //Jace-Bug mit '-' in erster Stelle wird abgefangen
+        expr = expr.Replace("√", "sqrt");
+        expr = expr.Replace("π", "pi");
+        expr = expr.Replace("log", "loge");
+        return expr;
 
     }
 
