@@ -8,17 +8,19 @@ public class FunctionInputManager : MonoBehaviour
 
     public string currentExpression;
     public Text text;
-    public InputField text2;
+    public InputField text3;
+    public VRInputField text2;
     // Start is called before the first frame update
     void Start()
     {
-        
+        text2.ActivateInputField();
+        //text2.caretBlinkRate = 1;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //if (!text2) text2.ActivateInputField();
     }
 
     public void AddToExpr(string input)
@@ -32,6 +34,9 @@ public class FunctionInputManager : MonoBehaviour
         Debug.Log(input + " " + temp);
         text2.text = temp;
         text2.caretPosition += input.Length;
+
+        //Test
+        text.text = ReplaceMathSymbols(temp);
     }
 
     public void CaretToLeft()
@@ -43,4 +48,22 @@ public class FunctionInputManager : MonoBehaviour
     {
         if (text2.caretPosition < text2.text.Length) text2.caretPosition += 1;
     }
+
+    public void DeleteOne()
+    {
+        if (text2.caretPosition != 0)
+        {
+            text2.caretPosition -= 1;
+            text2.text = text2.text.Remove(text2.caretPosition, 1);
+
+        }
+    }
+
+    private string ReplaceMathSymbols(string expr)
+    {
+        return expr.Replace("√", "sqrt");
+
+    }
+
+
 }
