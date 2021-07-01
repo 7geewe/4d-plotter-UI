@@ -4,7 +4,7 @@ using UnityEngine;
 using Jace;
 using System;
 
-public class FunctionCreator : MonoBehaviour
+public class FunctionCreator
 {
 
     private Dictionary<string, double> variables = new Dictionary<string, double>();

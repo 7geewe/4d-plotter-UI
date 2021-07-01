@@ -193,7 +193,7 @@ public class PlotRtoR3 : ScalingPlot
         UpdatePlot((_domain_s.x + _domain_s.y) / 2f);
     }
 
-    public void UpdatePlot(float s) //BIG TODO; KUGEL WIRD NICHT KORREKT PLATZIERT
+    public void UpdatePlot(float s)
     {
         float[] r = f(s);
         sphere.transform.SetParent(plot.curves.transform);

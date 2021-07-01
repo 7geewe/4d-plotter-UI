@@ -3,28 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Reflection;
-public class PlotCalculation : MonoBehaviour
+public class PlotCalculation
 {
     private int plotAccuracy = 50;
     private List<List<Vector3>> KurvenTest = new List<List<Vector3>>();
     
-
-
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-       
-    }
-   
 
     //plot für R->R mit Konstante; relevant für Triviale funktionen sowie zum Plotten von Ebenen
     public List<Vector3> CalculatePlotR1toRn(Func<float, float[]> f, float c = 0f, int cpos = 1) 
