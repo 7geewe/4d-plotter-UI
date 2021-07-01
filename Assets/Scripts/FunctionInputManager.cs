@@ -98,5 +98,12 @@ public class FunctionInputManager : MonoBehaviour
 
     }
 
+    public void ClearExpr()
+    {
+        currentExpression = "";
+        text2.text = "";
+
+    }
+
 
 }
