@@ -25,6 +25,7 @@ public class PlotDrawer
         lr.SetPositions(curve.ToArray());
         lr.startWidth = 0.01f;
         lr.useWorldSpace = false;
+        lr.generateLightingData = true;
         //lr.startColor = Color.cyan;
         Material m = lr.material;
         m.color = Color.cyan;

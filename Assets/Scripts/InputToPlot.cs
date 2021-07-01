@@ -46,7 +46,7 @@ public class InputToPlot : MonoBehaviour
 
         range = new Vector3[] { range_min, range_max };
 
-        domain_x = new Vector2(-2f, 2f);
+        domain_x = new Vector2(-2f, 4f);
         domain_y = new Vector2(-3f, 5f);
         domain_z = new Vector2(-5f, 5f);
 
@@ -57,9 +57,20 @@ public class InputToPlot : MonoBehaviour
     
     public void TestPlot()
     {
-        R3toR1[0] = text.text;
+        
+        string[] input = { variables[0] };
+        string[] inputR2 = { variables[0], variables[1] };
         string[] inputR3 = { variables[0], variables[1], variables[2] };
-        plot_R3toR = new PlotR3toR(inputR3, R3toR1.ToArray(), range, domain_x, domain_y, domain_z);
+
+        //R3toR1[0] = text.text;
+        //plot_R3toR = new PlotR3toR(inputR3, R3toR1.ToArray(), range, domain_x, domain_y, domain_z);
+
+
+        R2toR2[0] = "y^2*x";
+        R2toR2[1] = "sin(x)*y";
+
+        Debug.Log(R2toR2.ToArray()[0]+ "  " + R2toR2.ToArray()[1] );
+        plot_R2toR2 = new PlotR2toR2(inputR2, R2toR2.ToArray(), range, domain_x, domain_y);
 
     }
 
