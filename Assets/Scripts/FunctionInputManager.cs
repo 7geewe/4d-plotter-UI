@@ -6,68 +6,53 @@ using UnityEngine.UI;
 
 public class FunctionInputManager : MonoBehaviour
 {
+    public VRInputField _planeInputField, _curveInputField1, _pointInputField1;
+    private VRInputField _currentInputField;
 
-    public string currentExpression;
-    public Text text;
-    public InputField text3;
-    public VRInputField text2;
     // Start is called before the first frame update
 
 
     public GameObject _plane_p, _curve_p, _point_p;
-    private Text _activeTextField;
 
 
     void Start()
     {
-        text2.ActivateInputField();
-        //text2.caretBlinkRate = 1;
-
-        Debug.Log(CreateJaceExpr("xxx"));
-        Debug.Log(CreateJaceExpr("xxyy"));
-        Debug.Log(CreateJaceExpr("xxyyyyx"));
-        Debug.Log(CreateJaceExpr("xxyyyyyyyx"));
-        Debug.Log(CreateJaceExpr("xxyyyyyyyyyyyyyx"));
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if (!text2) text2.ActivateInputField();
+
     }
 
     public void AddToExpr(string input)
     {
-        //currentExpression += input;
-        //text.text = currentExpression;
-        string temp = text2.text;
-        int pos = text2.caretPosition;
-        Debug.Log(temp + " " + pos);
-        temp = temp.Insert(pos, input);
-        Debug.Log(input + " " + temp);
-        text2.text = temp;
-        text2.caretPosition += input.Length;
+        if (_currentInputField != null)
+        {
+            int pos = _currentInputField.caretPosition;
+            _currentInputField.text = _currentInputField.text.Insert(pos, input);
+            _currentInputField.caretPosition += input.Length;
+        }
 
-        //Test
-        text.text = CreateJaceExpr(temp);
     }
 
     public void CaretToLeft()
     {
-        if (text2.caretPosition > 0) text2.caretPosition -= 1;
+        if (_currentInputField != null && _currentInputField.caretPosition > 0) _currentInputField.caretPosition -= 1;
     }
 
     public void CaretToRight()
     {
-        if (text2.caretPosition < text2.text.Length) text2.caretPosition += 1;
+        if (_currentInputField != null && _currentInputField.caretPosition < _currentInputField.text.Length) _currentInputField.caretPosition += 1;
     }
 
     public void DeleteOne()
     {
-        if (text2.caretPosition != 0)
+        if (_currentInputField != null && _currentInputField.caretPosition != 0)
         {
-            text2.caretPosition -= 1;
-            text2.text = text2.text.Remove(text2.caretPosition, 1);
+            _currentInputField.caretPosition -= 1;
+            _currentInputField.text = _currentInputField.text.Remove(_currentInputField.caretPosition, 1);
 
         }
     }
@@ -106,25 +91,28 @@ public class FunctionInputManager : MonoBehaviour
 
     public void ClearExpr()
     {
-        currentExpression = "";
-        text2.text = "";
+        if (_currentInputField != null) _currentInputField.text = "";
 
     }
 
-    public void SetActiveField(Text t)
+    public void SetActiveField(VRInputField t)
     {
-        _activeTextField = t;
-        ClearExpr();
-        AddToExpr(t.text);
+        if (_currentInputField != null) _currentInputField.DeactivateInputField();
+        _currentInputField = t;
+        Debug.Log("ChangeActiveInputFieldTo:   " + t.ToString()) ;
+        _currentInputField.ActivateInputField();
+        
+        StartCoroutine(MoveTextEnd_NextFrame());
+        
+        
     }
 
-    public void SubmitExpression()
+    IEnumerator MoveTextEnd_NextFrame()
     {
-        if (_activeTextField != null)
-        {
-            _activeTextField.text = text2.text;
-        }
+        yield return 0; // Skip the first frame in which this is called.
+        _currentInputField.MoveTextEnd(false); // Do this during the next frame.
     }
+
 
 
     public void PlanePressed()
@@ -147,6 +135,11 @@ public class FunctionInputManager : MonoBehaviour
         _plane_p.SetActive(false);
         _point_p.SetActive(true);
 
+    }
+
+    public void Test()
+    {
+        Debug.Log("Knopf ist Heile");
     }
 
 

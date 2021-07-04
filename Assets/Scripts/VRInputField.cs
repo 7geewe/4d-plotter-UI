@@ -8,7 +8,7 @@ public class VRInputField : InputField
     public override void OnSelect(BaseEventData eventData)
     {
         Debug.Log("Overrides InputField.OnSelect");
-        //base.OnSelect(eventData);
+        base.OnSelect(eventData);
         //ActivateInputField();
     }
 
@@ -18,5 +18,6 @@ public class VRInputField : InputField
         //DeactivateInputField();
         //base.OnDeselect(eventData);
     }
+
 
 }
