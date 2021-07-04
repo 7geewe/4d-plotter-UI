@@ -12,6 +12,12 @@ public class FunctionInputManager : MonoBehaviour
     public InputField text3;
     public VRInputField text2;
     // Start is called before the first frame update
+
+
+    public GameObject _plane_p, _curve_p, _point_p;
+    private Text _activeTextField;
+
+
     void Start()
     {
         text2.ActivateInputField();
@@ -104,6 +110,45 @@ public class FunctionInputManager : MonoBehaviour
         text2.text = "";
 
     }
+
+    public void SetActiveField(Text t)
+    {
+        _activeTextField = t;
+        ClearExpr();
+        AddToExpr(t.text);
+    }
+
+    public void SubmitExpression()
+    {
+        if (_activeTextField != null)
+        {
+            _activeTextField.text = text2.text;
+        }
+    }
+
+
+    public void PlanePressed()
+    {
+        _curve_p.SetActive(false);
+        _point_p.SetActive(false);
+        _plane_p.SetActive(true);
+    }
+    public void CurvePressed()
+    {
+        _point_p.SetActive(false);
+        _plane_p.SetActive(false);
+        _curve_p.SetActive(true);
+    }
+
+
+    public void PointPressed()
+    {
+        _curve_p.SetActive(false);
+        _plane_p.SetActive(false);
+        _point_p.SetActive(true);
+
+    }
+
 
 
 }
