@@ -557,6 +557,17 @@
                 },
                 {
                     "name": "",
+                    "id": "5854a836-3d20-474f-b8e9-fe139f8d475c",
+                    "path": "<XRController>{RightHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "UI Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "f029d63b-61df-46ba-b778-4c69688fdadb",
                     "path": "<XRController>{RightHand}/Primary2DAxis",
                     "interactions": "",

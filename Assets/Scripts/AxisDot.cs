@@ -24,7 +24,7 @@ public class AxisDot : MonoBehaviour
         z_axis_position = new Vector3(-box_radius, -box_radius, 0f);
         z_axis_rotation = new Vector3(0f, 0f, 45f);
 
-        CreateFullLegend(new Vector3(3f, -1f, -4f), new Vector3(6f, 4f, 2f));
+        CreateFullLegend(new Vector3(-4f, -4f, -4f), new Vector3(4f, 4f, 4f));
     }
 
     public void CreateDot(float t, Vector3 pos, Vector3 rot)

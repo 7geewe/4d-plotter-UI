@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class FunctionInputManager : MonoBehaviour
 {
+
+
     public VRInputField _planeInputField, _curveInputField1, _pointInputField1;
     private VRInputField _currentInputField;
 
@@ -25,7 +27,6 @@ public class FunctionInputManager : MonoBehaviour
     //point
     public Text _f1_point, _f2_point, _f3_point, _s_min_point, _s_max_point;
     // Start is called before the first frame update
-
 
 
     void Start()
@@ -103,6 +104,7 @@ public class FunctionInputManager : MonoBehaviour
     private string CreateJaceExpr(string expr)
     {
 
+        if (expr.Length == 0) return "0";
         string temp = expr;
         int end = expr.Length;
 
@@ -133,14 +135,13 @@ public class FunctionInputManager : MonoBehaviour
             {
                 temp = temp.Insert(i-1, "*");
             }
-            if (c == ')' && i != end && !operands.Contains(temp[i]) && temp[i] != ')') //für fälle wie 'cos(3)x -> cos(3)*x ; vierter Fall für zwei schließende Klammern hintereinander
+            if (c == ')' && i != end && (!operands.Contains(temp[i]) ^ temp[i] == '(') && temp[i] != ')') //für fälle wie 'cos(3)x -> cos(3)*x ; vierter Fall für zwei schließende Klammern hintereinander
             {
                 temp = temp.Insert(i, "*");
             }
         }
 
         //temp = temp.Replace(")*)", "))");
-
 
 
         if (temp[0] == '-') temp = temp.Insert(1, "1*"); //Jace-Bug mit '-' in erster Stelle wird abgefangen

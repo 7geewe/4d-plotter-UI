@@ -1,11 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class GameManager : MonoBehaviour
 {
     //Singleton
     public static GameManager instance = null;
+
+
+    public InputDevice _leftController;
+
 
     //plane
     private PlotR3toR _plane;

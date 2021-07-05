@@ -127,7 +127,9 @@ public class PlotCalculation
                 segment.Add(v_current);
                 if (bound_v_next != v_zeros)
                 {
-                    segment.Add(IntersectionPoint(v_current, v_next, bound_v_next, min, max));
+
+                    //Add a intersectionpoint, but only when the value is not NaN
+                    if (!float.IsNaN(bound_v_next.x)) segment.Add(IntersectionPoint(v_current, v_next, bound_v_next, min, max));
                     segments.Add(new List<Vector3>(segment));
                     segment.Clear();
                 }
@@ -136,6 +138,34 @@ public class PlotCalculation
         Vector3 v_last = curve[curve.Count - 1];
         if (BoundVector(v_last, min, max) == v_zeros) segment.Add(v_last);
         segments.Add(new List<Vector3>(segment));
+
+
+        //Split Segments with Connected Function Jumps
+
+        /**List<List<Vector3>> splittedSegments = new List<List<Vector3>>();
+        foreach (List<Vector3> s in segments)
+        {
+
+
+            int lastJump = 0;
+            for (int i = 0; i < s.Count-1; i++)
+            {
+                Vector3 jumpTest = s[i] - s[i + 1];
+
+                if(Math.Abs(jumpTest.x) > Math.Abs(max.x-min.x)*0.5f ^ Math.Abs(jumpTest.y) > Math.Abs(max.y - min.y) * 0.5f ^ Math.Abs(jumpTest.z) > Math.Abs(max.z - min.z) * 0.5f)
+                {
+                    splittedSegments.Add(s.GetRange(lastJump, i - lastJump));
+                    lastJump = i;
+                }
+
+            }
+            splittedSegments.Add(s.GetRange(lastJump, s.Count - lastJump));
+
+            
+        }**/
+
+
+
 
         return segments;
     }
@@ -147,8 +177,12 @@ public class PlotCalculation
         minTest = v - min;
         maxTest = v - max;
 
+        if (float.IsNaN(v.x) ^ float.IsNaN(v.y) ^ float.IsNaN(v.z)) return new Vector3(float.NaN, 0f, 0f);
+
+
         if (minTest.x < 0f) result.x = -1;
         else if (maxTest.x > 0f) result.x = 1;
+        
 
         if (minTest.y < 0f) result.y = -1;
         else if (maxTest.y > 0f) result.y = 1;
