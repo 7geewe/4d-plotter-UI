@@ -9,12 +9,23 @@ public class FunctionInputManager : MonoBehaviour
     public VRInputField _planeInputField, _curveInputField1, _pointInputField1;
     private VRInputField _currentInputField;
 
+    public Button _x, _z;
+
     public Text _test;
 
+    public GameObject _plane_p, _curve_p, _point_p;
+
+
+    //plane
+    public Text _f, _s_min_plane, _s_max_plane, _x_min_plane, _x_max_plane, _z_min_plane, _z_max_plane, _v_x, _v_y, _v_z;
+
+    //curve
+    public Text _f1_curve, _f2_curve, _s_min_curve, _s_max_curve, _x_min_curve, _x_max_curve;
+
+    //point
+    public Text _f1_point, _f2_point, _f3_point, _s_min_point, _s_max_point;
     // Start is called before the first frame update
 
-
-    public GameObject _plane_p, _curve_p, _point_p;
 
 
     void Start()
@@ -25,7 +36,36 @@ public class FunctionInputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    }
 
+    public void LoadPlane()
+    {
+        string f = CreateJaceExpr(_f.text);
+        Vector2 domain_s = new Vector2(float.Parse(_s_min_plane.text), float.Parse(_s_max_plane.text));
+        Vector2 domain_x = new Vector2(float.Parse(_x_min_plane.text), float.Parse(_x_max_plane.text));
+        Vector2 domain_z = new Vector2(float.Parse(_z_min_plane.text), float.Parse(_z_max_plane.text));
+
+        GameManager.instance.UpdatePlane(f, domain_s, domain_x, domain_z);
+    }
+
+    public void LoadCurve()
+    {
+        string f1 = CreateJaceExpr(_f1_curve.text);
+        string f2 = CreateJaceExpr(_f2_curve.text);
+        Vector2 domain_s = new Vector2(float.Parse(_s_min_curve.text), float.Parse(_s_max_curve.text));
+        Vector2 domain_x = new Vector2(float.Parse(_x_min_curve.text), float.Parse(_x_max_curve.text));
+
+        GameManager.instance.UpdateCurve(f1, f2, domain_s, domain_x);
+    }
+
+    public void LoadPoint()
+    {
+        string f1 = CreateJaceExpr(_f1_point.text);
+        string f2 = CreateJaceExpr(_f2_point.text);
+        string f3 = CreateJaceExpr(_f3_point.text);
+        Vector2 domain_s = new Vector2(float.Parse(_s_min_point.text), float.Parse(_s_max_point.text));
+
+        GameManager.instance.UpdatePoint(f1, f2, f3, domain_s);
     }
 
     public void AddToExpr(string input)
@@ -62,12 +102,6 @@ public class FunctionInputManager : MonoBehaviour
 
     private string CreateJaceExpr(string expr)
     {
-        
-
-
-
-
-
 
         string temp = expr;
         int end = expr.Length;
@@ -148,12 +182,16 @@ public class FunctionInputManager : MonoBehaviour
         _curve_p.SetActive(false);
         _point_p.SetActive(false);
         _plane_p.SetActive(true);
+        _x.interactable = true;
+        _z.interactable = true;
     }
     public void CurvePressed()
     {
         _point_p.SetActive(false);
         _plane_p.SetActive(false);
         _curve_p.SetActive(true);
+        _x.interactable = true;
+        _z.interactable = false;
     }
 
 
@@ -162,6 +200,8 @@ public class FunctionInputManager : MonoBehaviour
         _curve_p.SetActive(false);
         _plane_p.SetActive(false);
         _point_p.SetActive(true);
+        _x.interactable = false;
+        _z.interactable = false;
 
     }
 

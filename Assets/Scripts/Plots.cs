@@ -148,7 +148,7 @@ public class PlotR3toR : ScalingPlot
         UpdatePlot((_domain_s.x + _domain_s.y) / 2f);
     }
 
-    public PlotR3toR(string[] input, string[] formula, float[] scan_direction, Vector3[] range, Vector2 domain_s, Vector2 domain_y, Vector2 domain_z) : base(range, domain_s)
+    public PlotR3toR(string[] input, string[] formula, Vector3 scan_direction, Vector3[] range, Vector2 domain_s, Vector2 domain_y, Vector2 domain_z) : base(range, domain_s)
     {
         f = creator.R3toRm(input[0], input[1], input[2], formula);
         CreateScaleFunction(scan_direction);
@@ -165,9 +165,9 @@ public class PlotR3toR : ScalingPlot
         plot.MoveAndScale();
     }
 
-    public void CreateScaleFunction(float[] scan_direction)
+    public void CreateScaleFunction(Vector3 scan_direction)
     {
-        f_scaled = creator.R3toRnScalars(f, new Vector3(scan_direction[0], scan_direction[1], scan_direction[2]));
+        f_scaled = creator.R3toRnScalars(f, scan_direction);
     }
 
     public void Switch_To_Scaled_Mode(bool scale)
