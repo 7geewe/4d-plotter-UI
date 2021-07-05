@@ -9,6 +9,8 @@ public class FunctionInputManager : MonoBehaviour
     public VRInputField _planeInputField, _curveInputField1, _pointInputField1;
     private VRInputField _currentInputField;
 
+    public Text _test;
+
     // Start is called before the first frame update
 
 
@@ -33,6 +35,7 @@ public class FunctionInputManager : MonoBehaviour
             int pos = _currentInputField.caretPosition;
             _currentInputField.text = _currentInputField.text.Insert(pos, input);
             _currentInputField.caretPosition += input.Length;
+            _test.text = CreateJaceExpr(_currentInputField.text);
         }
 
     }
@@ -59,33 +62,58 @@ public class FunctionInputManager : MonoBehaviour
 
     private string CreateJaceExpr(string expr)
     {
+        
+
+
+
+
+
+
+        string temp = expr;
+        int end = expr.Length;
+
+        //Richtiges Ersetzen von s, x, z -> x, y, z
+
+        temp = temp.Replace("sin", "$");
+        temp = temp.Replace("cos", "?");
+
+        temp = temp.Replace('x', 'y');
+        temp = temp.Replace('s', 'x');
+
+        temp = temp.Replace("$", "sin");
+        temp = temp.Replace("?", "cos");
+
+
+
+
         //stille Mulitplikation ermöglichen // Sonderfall ')'
         char[] blocks = {'x', 'y', 'z', 'e', 'π',
                            's', 'c', 't', 'l', '√'};
 
-        char[] operands = { '+', '-', '*', '/', '^', '.', '('};
+        char[] operands = { '+', '-', '*', '/', '^', '.', '(' };
 
-        int end = expr.Length;
         for (int i = end; i > 1; i--)
         {
-            char c = expr[i-1];
-            if (blocks.Contains(c) && !operands.Contains(expr[i-2]) && expr[i - 2] != 'o') //dritter fall für cos sonderfall
+            char c = temp[i-1];
+            if (blocks.Contains(c) && !operands.Contains(temp[i-2]) && temp[i - 2] != 'o') //dritter fall für cos sonderfall
             {
-                expr = expr.Insert(i-1, "*");
+                temp = temp.Insert(i-1, "*");
             }
-            if (c == ')' && i != end && !operands.Contains(expr[i])) //für fälle wie 'cos(3)x -> cos(3)*x
+            if (c == ')' && i != end && !operands.Contains(temp[i]) && temp[i] != ')') //für fälle wie 'cos(3)x -> cos(3)*x ; vierter Fall für zwei schließende Klammern hintereinander
             {
-                expr = expr.Insert(i, "*");
+                temp = temp.Insert(i, "*");
             }
         }
 
+        //temp = temp.Replace(")*)", "))");
 
 
-        if (expr[0] == '-') expr = expr.Insert(1, "1*"); //Jace-Bug mit '-' in erster Stelle wird abgefangen
-        expr = expr.Replace("√", "sqrt");
-        expr = expr.Replace("π", "pi");
-        expr = expr.Replace("log", "loge");
-        return expr;
+
+        if (temp[0] == '-') temp = temp.Insert(1, "1*"); //Jace-Bug mit '-' in erster Stelle wird abgefangen
+        temp = temp.Replace("√", "sqrt");
+        temp = temp.Replace("π", "pi");
+        temp = temp.Replace("log", "loge");
+        return temp;
 
     }
 
