@@ -41,12 +41,30 @@ public class FunctionInputManager : MonoBehaviour
 
     public void LoadPlane()
     {
+        if (_v_x.IsActive())
+        {
+            //Debug.Log("scaledPlot");
+            LoadScaledPlane();
+            return;
+        }
+                
         string f = CreateJaceExpr(_f.text);
         Vector2 domain_s = new Vector2(float.Parse(_s_min_plane.text), float.Parse(_s_max_plane.text));
         Vector2 domain_x = new Vector2(float.Parse(_x_min_plane.text), float.Parse(_x_max_plane.text));
         Vector2 domain_z = new Vector2(float.Parse(_z_min_plane.text), float.Parse(_z_max_plane.text));
 
         GameManager.instance.UpdatePlane(f, domain_s, domain_x, domain_z);
+    }
+
+    private void LoadScaledPlane()
+    {
+        string f = CreateJaceExpr(_f.text);
+        Vector2 domain_s = new Vector2(float.Parse(_s_min_plane.text), float.Parse(_s_max_plane.text));
+        Vector2 domain_x = new Vector2(float.Parse(_x_min_plane.text), float.Parse(_x_max_plane.text));
+        Vector2 domain_z = new Vector2(float.Parse(_z_min_plane.text), float.Parse(_z_max_plane.text));
+        Vector3 scaleVector = new Vector3(float.Parse(_v_x.text), float.Parse(_v_y.text), float.Parse(_v_z.text));
+
+        GameManager.instance.UpdatePlane(f, domain_s, domain_x, domain_z, scaleVector);
     }
 
     public void LoadCurve()

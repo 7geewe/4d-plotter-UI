@@ -5,6 +5,10 @@ using System;
 
 public class PlotDrawer
 {
+
+
+    private Material plotMat = (Material)Resources.Load("PlotMaterial", typeof(Material));
+
     public GameObject DrawCurves(List<List<Vector3>> curves)
     {
         GameObject plot = new GameObject();
@@ -26,9 +30,9 @@ public class PlotDrawer
         lr.startWidth = 0.01f;
         lr.useWorldSpace = false;
         lr.generateLightingData = true;
-        //lr.startColor = Color.cyan;
-        Material m = lr.material;
-        m.color = Color.cyan;
+        lr.startColor = Color.cyan;
+        Material plotMat = (Material)Resources.Load("PlotMaterial", typeof(Material));
+        lr.material = plotMat;
         return curve_obj;
     }
 

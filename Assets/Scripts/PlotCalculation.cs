@@ -5,7 +5,7 @@ using System;
 using System.Reflection;
 public class PlotCalculation
 {
-    private int plotAccuracy = 50;
+    private int plotAccuracy;
     private List<List<Vector3>> KurvenTest = new List<List<Vector3>>();
     
 
@@ -21,8 +21,8 @@ public class PlotCalculation
         
         Vector3 vertice = new Vector3();
         List<Vector3> curve = new List<Vector3>();
-       
 
+        plotAccuracy = GameManager.instance._plotAccuracy;
         for (int i = 0; i <= plotAccuracy; i++)
         {
             float input = (float)i / plotAccuracy * (dom_max - dom_min) + dom_min; //Normalisierter Wert anhand der Intervallgrenzen
@@ -65,7 +65,7 @@ public class PlotCalculation
 
         List<List<Vector3>> curves = new List<List<Vector3>>();
 
-
+        plotAccuracy = GameManager.instance._plotAccuracy;
         for (int i = 0; i <= plotAccuracy; i++)
         {
             float input1 = (float)i / plotAccuracy * (domain_1.y - domain_1.x) + domain_1.x; //Normalisierter Wert anhand der Intervallgrenzen

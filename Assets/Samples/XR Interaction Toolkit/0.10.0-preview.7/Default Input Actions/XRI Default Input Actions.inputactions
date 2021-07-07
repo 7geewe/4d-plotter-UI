@@ -557,17 +557,6 @@
                 },
                 {
                     "name": "",
-                    "id": "5854a836-3d20-474f-b8e9-fe139f8d475c",
-                    "path": "<XRController>{RightHand}/primaryButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Generic XR Controller",
-                    "action": "UI Press",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "f029d63b-61df-46ba-b778-4c69688fdadb",
                     "path": "<XRController>{RightHand}/Primary2DAxis",
                     "interactions": "",
@@ -618,6 +607,33 @@
                     "processors": "",
                     "groups": "Generic XR Controller",
                     "action": "Haptic Device",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "PlotInteraction",
+            "id": "f6130d08-cd94-43ff-a72b-8509e1919dfc",
+            "actions": [
+                {
+                    "name": "Scan",
+                    "type": "Value",
+                    "id": "9b38fbde-c31a-4a83-9dac-adf0a9e69d41",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "41e421c8-84a5-4236-8ab0-75de1da7d21e",
+                    "path": "<OculusTouchController>/thumbstick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Scan",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

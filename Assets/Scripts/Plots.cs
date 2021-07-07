@@ -12,7 +12,10 @@ public class Plot
     protected FunctionCreator creator;
     protected PlotDrawer drawer;
 
-    protected Vector3 range_min, range_max; 
+    protected Vector3 range_min, range_max;
+
+    
+    private Vector3 middle, size;
 
     public Plot(Vector3[] range)
     {
@@ -25,14 +28,16 @@ public class Plot
         range_min = range[0];
         range_max = range[1];
 
+        middle = GameManager.instance._boxPos;
+        size = GameManager.instance._boxScale;
+
     }
 
     public void MoveAndScale()
     {
         Vector3 newSize = range_max - range_min;
         Vector3 newMiddle = (range_min+range_max)/2f;
-        Vector3 middle = GameObject.Find("HologramBox").transform.position;
-        Vector3 size = GameObject.Find("HologramBox").transform.localScale;
+        
 
         curves.transform.position = middle - newMiddle;
         GameObject newPivotPoint = new GameObject();
@@ -106,6 +111,10 @@ public class ScalingPlot
         _domain_s = domain_s;
     }
 
+    public virtual void UpdatePlot(float s) 
+    {
+    }
+
 }
 
 
@@ -123,7 +132,7 @@ public class PlotR2toR2 : ScalingPlot
         UpdatePlot((_domain_s.x+_domain_s.y)/2f);
     }
 
-    public void UpdatePlot(float s)
+    public override void UpdatePlot(float s)
     {
         plot = new PlotRtoRn(y => f(s, y), _range, _dom_y);
         plot.MoveAndScale();
@@ -157,10 +166,18 @@ public class PlotR3toR : ScalingPlot
         _dom_z = domain_z;
         UpdatePlot((_domain_s.x + _domain_s.y) / 2f);
     }
-    public void UpdatePlot(float s)
+    public override void UpdatePlot(float s)
     {
-        if (!scaled) plot = new PlotR2toR((y, z) => f(s, y, z), _range, _dom_y, _dom_z);
-        else plot = new PlotR2toR((y, z) => f_scaled(s, y, z), _range, _dom_y, _dom_z);
+
+        if (!scaled)
+        {
+            plot = new PlotR2toR((y, z) => f(s, y, z), _range, _dom_y, _dom_z);
+        }
+        else
+        {
+            plot = new PlotR2toR((y, z) => f_scaled(s, y, z), _range, _dom_y, _dom_z);
+            Debug.Log("Update scaled Plot");
+        }
 
         plot.MoveAndScale();
     }
@@ -187,13 +204,13 @@ public class PlotRtoR3 : ScalingPlot
         f = creator.R1toRm(input[0], formulas);
         plot = new PlotRtoRn(input, formulas, _range, _domain_s);
         sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        sphere.transform.localScale = new Vector3(1f, 1f, 1f);
+        sphere.transform.localScale = new Vector3(0.03f, 0.03f, 0.03f);
 
         plot.MoveAndScale();
         UpdatePlot((_domain_s.x + _domain_s.y) / 2f);
     }
 
-    public void UpdatePlot(float s)
+    public override void UpdatePlot(float s)
     {
         float[] r = f(s);
         sphere.transform.SetParent(plot.curves.transform);
