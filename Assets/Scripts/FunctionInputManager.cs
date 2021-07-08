@@ -15,9 +15,9 @@ public class FunctionInputManager : MonoBehaviour
 
     public Text _test;
 
-    public GameObject _plane_p, _curve_p, _point_p;
+    public GameObject _landingPage, _plane_p, _curve_p, _point_p;
 
-
+    
     //plane
     public Text _f, _s_min_plane, _s_max_plane, _x_min_plane, _x_max_plane, _z_min_plane, _z_max_plane, _v_x, _v_y, _v_z;
 
@@ -196,8 +196,19 @@ public class FunctionInputManager : MonoBehaviour
 
 
 
+    public void LandingPagePressed()
+    {
+        _curve_p.SetActive(false);
+        _point_p.SetActive(false);
+        _plane_p.SetActive(false);
+        _landingPage.SetActive(true);
+        _x.interactable = true;
+        _z.interactable = true;
+    }
+    
     public void PlanePressed()
     {
+        _landingPage.SetActive(false);
         _curve_p.SetActive(false);
         _point_p.SetActive(false);
         _plane_p.SetActive(true);
@@ -206,6 +217,7 @@ public class FunctionInputManager : MonoBehaviour
     }
     public void CurvePressed()
     {
+        _landingPage.SetActive(false);
         _point_p.SetActive(false);
         _plane_p.SetActive(false);
         _curve_p.SetActive(true);
@@ -216,6 +228,7 @@ public class FunctionInputManager : MonoBehaviour
 
     public void PointPressed()
     {
+        _landingPage.SetActive(false);
         _curve_p.SetActive(false);
         _plane_p.SetActive(false);
         _point_p.SetActive(true);
