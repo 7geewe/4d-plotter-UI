@@ -14,17 +14,17 @@ public class AxisDot : MonoBehaviour
     private void Start()
     {
 
-        x_axis_position = new Vector3(0f, box_radius, -box_radius);
+        x_axis_position = new Vector3(0f, box_radius, box_radius);
         x_axis_rotation = new Vector3(45f, 0f, 90f);
 
 
-        y_axis_position = new Vector3(-box_radius, 0f, -box_radius);
+        y_axis_position = new Vector3(box_radius, 0f, box_radius);
         y_axis_rotation = new Vector3(0f, -45f, 0f);
 
-        z_axis_position = new Vector3(-box_radius, box_radius, 0f);
+        z_axis_position = new Vector3(box_radius, box_radius, 0f);
         z_axis_rotation = new Vector3(0f, 0f, 45f);
 
-        CreateFullLegend(new Vector3(-4f, -4f, -4f), new Vector3(4f, 4f, 4f));
+        CreateFullLegend(new Vector3(-2f, -4f, -2f), new Vector3(2f, 4f, 2f));
     }
 
     public void CreateDot(float t, Vector3 pos, Vector3 rot)

@@ -39,10 +39,26 @@ public class GameManager : MonoBehaviour
     private Vector2 _domain_s_point;
 
     //all
-    private Vector3 _range_min = new Vector3(-4f, -4f, -4f), _range_max = new Vector3(4f, 4f, 4f);
+    private Vector3 _range_min = new Vector3(-2f, -4f, -2f), _range_max = new Vector3(2f, 4f, 2f);
     private float _s = 0;
     private Vector2 _s_current_domain = new Vector2(-2f, 2f);
     private ScalingPlot _activePlot;
+
+
+    //events
+    public float scan
+    {
+        get { return _s; }
+        set
+        {
+            if (_s == value) return;
+            _s = value;
+            OnScanChange?.Invoke(_s);
+        }
+    }
+
+    public delegate void OnScanChangeDelegate(float newVal);
+    public event OnScanChangeDelegate OnScanChange;
 
     //Singleton
     private void Awake()
@@ -57,7 +73,18 @@ public class GameManager : MonoBehaviour
 
     public void ScanPlot(float s)
     {
-        _s += s * Time.deltaTime / (_s_current_domain.y - _s_current_domain.x) * _scanningSpeed / (float)_framesPerScan;
+        scan += s * Time.deltaTime / (_s_current_domain.y - _s_current_domain.x) * _scanningSpeed / (float)_framesPerScan;
+        if(!_scaleDirectionEnabled && _s > _s_current_domain.y)
+        {
+            scan -= (_s_current_domain.y - _s_current_domain.x);
+        }
+        else if (!_scaleDirectionEnabled && _s < _s_current_domain.x)
+        {
+            scan += (_s_current_domain.y - _s_current_domain.x);
+        }
+
+
+
         if (_activePlot != null)
         {
             if (!(_activePlot is PlotRtoR3)) Destroy(_activePlot.plot.curves);
@@ -75,7 +102,7 @@ public class GameManager : MonoBehaviour
 
         _activePlot = _plane;
         _s_current_domain = _domain_s_plane;
-        _s = (_s_current_domain.x + _s_current_domain.y) / 2;
+        scan = (_s_current_domain.x + _s_current_domain.y) / 2;
     }
 
     public void SetCurveActive()
@@ -86,7 +113,7 @@ public class GameManager : MonoBehaviour
 
         _activePlot = _curve;
         _s_current_domain = _domain_s_curve;
-        _s = (_s_current_domain.x + _s_current_domain.y) / 2;
+        scan = (_s_current_domain.x + _s_current_domain.y) / 2;
     }
 
     public void SetPointActive()
@@ -97,7 +124,7 @@ public class GameManager : MonoBehaviour
 
         _activePlot = _point;
         _s_current_domain = _domain_s_point;
-        _s = (_s_current_domain.x + _s_current_domain.y) / 2;
+        scan = (_s_current_domain.x + _s_current_domain.y) / 2;
     }
 
 
@@ -156,12 +183,11 @@ public class GameManager : MonoBehaviour
 
         if(_point != null)
         {
-            //Destroy(_point.plot.curves);
+            Destroy(_point.plot.curves);
         }
-        else
-        {
-            _point = CreatePoint();
-        }
+
+        _point = CreatePoint();
+
 
 
 

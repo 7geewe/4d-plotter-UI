@@ -170,7 +170,7 @@ public class PlotCalculation
         return segments;
     }
 
-    private Vector3 BoundVector(Vector3 v, Vector3 min, Vector3 max)
+    public Vector3 BoundVector(Vector3 v, Vector3 min, Vector3 max)
     {
         Vector3 result, minTest, maxTest = new Vector3();
         result = new Vector3(0, 0, 0);

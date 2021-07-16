@@ -26,6 +26,10 @@ public class FunctionInputManager : MonoBehaviour
 
     //point
     public Text _f1_point, _f2_point, _f3_point, _s_min_point, _s_max_point;
+
+    //box
+    public Text _x_axis, _y_axis, _z_axis;
+
     // Start is called before the first frame update
 
 
@@ -41,6 +45,11 @@ public class FunctionInputManager : MonoBehaviour
 
     public void LoadPlane()
     {
+        _x_axis.text = "x";
+        _y_axis.text = $"y = {_f.text}";
+        _z_axis.text = "z";
+
+
         if (_v_x.IsActive())
         {
             //Debug.Log("scaledPlot");
@@ -54,6 +63,9 @@ public class FunctionInputManager : MonoBehaviour
         Vector2 domain_z = new Vector2(float.Parse(_z_min_plane.text), float.Parse(_z_max_plane.text));
 
         GameManager.instance.UpdatePlane(f, domain_s, domain_x, domain_z);
+
+
+
     }
 
     private void LoadScaledPlane()
@@ -69,6 +81,10 @@ public class FunctionInputManager : MonoBehaviour
 
     public void LoadCurve()
     {
+        _x_axis.text = $"x = {_f1_curve.text}";
+        _y_axis.text = $"y = {_f2_curve.text}";
+        _z_axis.text = "z";
+
         string f1 = CreateJaceExpr(_f1_curve.text);
         string f2 = CreateJaceExpr(_f2_curve.text);
         Vector2 domain_s = new Vector2(float.Parse(_s_min_curve.text), float.Parse(_s_max_curve.text));
@@ -79,6 +95,10 @@ public class FunctionInputManager : MonoBehaviour
 
     public void LoadPoint()
     {
+        _x_axis.text = $"x = {_f1_point.text}";
+        _y_axis.text = $"y = {_f2_point.text}";
+        _z_axis.text = $"z = {_f3_point.text}";
+
         string f1 = CreateJaceExpr(_f1_point.text);
         string f2 = CreateJaceExpr(_f2_point.text);
         string f3 = CreateJaceExpr(_f3_point.text);

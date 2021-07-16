@@ -198,9 +198,12 @@ public class PlotRtoR3 : ScalingPlot
 {
     private GameObject sphere;
     private Func<float, float[]> f;
+    private PlotCalculation calculator;
 
     public PlotRtoR3(string[] input, string[] formulas, Vector3[] range, Vector2 domain) : base(range, domain)
     {
+        calculator = new PlotCalculation();
+
         f = creator.R1toRm(input[0], formulas);
         plot = new PlotRtoRn(input, formulas, _range, _domain_s);
         sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -212,10 +215,20 @@ public class PlotRtoR3 : ScalingPlot
 
     public override void UpdatePlot(float s)
     {
+        sphere.SetActive(false);
+        
         float[] r = f(s);
+        Vector3 pos = new Vector3(r[0], r[2], r[1]);
+
         sphere.transform.SetParent(plot.curves.transform);
         sphere.transform.position = plot.curves.transform.position;
-        sphere.transform.localPosition = new Vector3(r[0], r[2], r[1]);
+        if (calculator.BoundVector(pos, _range[0], _range[1]) == Vector3.zero)
+        {
+            //Debug.Log("Kugel an");
+            sphere.transform.localPosition = pos;
+            sphere.SetActive(true);
+        }
+
 
     }
 
