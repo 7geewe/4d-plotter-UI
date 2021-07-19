@@ -12,8 +12,8 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
-  productName: VR_setup_test
+  companyName: Geewe Technologies
+  productName: Plot4D
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -124,8 +124,12 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 0.1
-  preloadedAssets: []
+  bundleVersion: 0.9
+  preloadedAssets:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: -6919821568137921623, guid: 33cd05e5f8b63ec4982b1d3f0b4e9fdb, type: 2}
+  - {fileID: 11400000, guid: ad3c891b114ddcc459aa178c7c3de6d0, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1

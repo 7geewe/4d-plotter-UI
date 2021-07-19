@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AxisLabeling : MonoBehaviour
+public class AxisDot : MonoBehaviour
 {
 
     public GameObject axisDot;
     private float box_radius = 0.5f;
     private Vector3 x_axis_position, x_axis_rotation, y_axis_position, y_axis_rotation, z_axis_position, z_axis_rotation;
-    private GameObject _box;
-    private List<GameObject> _labeling = new List<GameObject>();
+    private GameObject _labeling, _box;
     private Camera _mainCamera;
 
 
@@ -37,9 +36,9 @@ public class AxisLabeling : MonoBehaviour
 
     public void UpdateLabeling(Vector3 range_min, Vector3 range_max)
     {
-        foreach(GameObject g in _labeling)
+        if (_labeling != null)
         {
-            Destroy(g);
+            Destroy(_labeling);
         }
 
         CreateFullLegend(range_min, range_max);
@@ -52,13 +51,12 @@ public class AxisLabeling : MonoBehaviour
 
     private void CreateDot(float t, Vector3 pos, Vector3 rot)
     {
-        GameObject dot = Instantiate(axisDot);
-        dot.GetComponentInChildren<Canvas>().worldCamera = _mainCamera;
-        dot.GetComponentInChildren<Text>().text = t.ToString();
-        dot.transform.SetParent(_box.transform);
-        dot.transform.localPosition = pos;
-        dot.transform.localRotation *= Quaternion.Euler(rot);
-        _labeling.Add(dot);
+        _labeling = Instantiate(axisDot);
+        _labeling.GetComponentInChildren<Canvas>().worldCamera = _mainCamera;
+        _labeling.GetComponentInChildren<Text>().text = t.ToString();
+        _labeling.transform.SetParent(_box.transform);
+        _labeling.transform.localPosition = pos;
+        _labeling.transform.localRotation *= Quaternion.Euler(rot);
     }
 
 
@@ -102,20 +100,14 @@ public class AxisLabeling : MonoBehaviour
     {
         List<float> res = new List<float>();
 
-        float start = Mathf.Ceil(range.x * 2f) / 2f;
-        float end = Mathf.Floor(range.y * 2f) / 2f;
-
-
-        for (float i = start; i <= end; i += space)
+        float range_length = range.y - range.x;
+        for (float i = space; i <= range_length-space*0.2; i += space)
         {
-            res.Add(i);
-        }   
-
+            res.Add(i + range.x);
+        }
         return res;
 
     }
-
-
 
     private void CreateDot_x(float point, Vector2 range)
     {

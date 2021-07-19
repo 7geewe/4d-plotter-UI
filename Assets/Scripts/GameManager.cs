@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 
+
 public class GameManager : MonoBehaviour
 {
     //Singleton
@@ -16,6 +17,8 @@ public class GameManager : MonoBehaviour
     //box
     public GameObject _hologramBox;
     public Vector3 _boxPos, _boxScale;
+    private AxisLabeling _axisLabeling;
+    private float _moveSpeed = 8f;
 
     //scanning
     public float _scanningSpeed = 40f;
@@ -71,6 +74,22 @@ public class GameManager : MonoBehaviour
     }
 
 
+
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        //initialize box labeling
+        _axisLabeling = _hologramBox.GetComponent<AxisLabeling>();
+        _axisLabeling.UpdateLabeling(_range_min, _range_max);
+
+
+
+
+
+    }
+
     public void ScanPlot(float s)
     {
         scan += s * Time.deltaTime / (_s_current_domain.y - _s_current_domain.x) * _scanningSpeed / (float)_framesPerScan;
@@ -102,7 +121,7 @@ public class GameManager : MonoBehaviour
 
         _activePlot = _plane;
         _s_current_domain = _domain_s_plane;
-        scan = (_s_current_domain.x + _s_current_domain.y) / 2;
+
     }
 
     public void SetCurveActive()
@@ -113,7 +132,7 @@ public class GameManager : MonoBehaviour
 
         _activePlot = _curve;
         _s_current_domain = _domain_s_curve;
-        scan = (_s_current_domain.x + _s_current_domain.y) / 2;
+
     }
 
     public void SetPointActive()
@@ -124,7 +143,7 @@ public class GameManager : MonoBehaviour
 
         _activePlot = _point;
         _s_current_domain = _domain_s_point;
-        scan = (_s_current_domain.x + _s_current_domain.y) / 2;
+
     }
 
 
@@ -155,6 +174,7 @@ public class GameManager : MonoBehaviour
         _plane = CreatePlane();
 
         SetPlaneActive();
+        scan = (_s_current_domain.x + _s_current_domain.y) / 2;
     }
 
     public void UpdateCurve(string f1, string f2, Vector2 domain_s, Vector2 domain_x)
@@ -172,6 +192,7 @@ public class GameManager : MonoBehaviour
         _curve = CreateCurve();
 
         SetCurveActive();
+        scan = (_s_current_domain.x + _s_current_domain.y) / 2;
     }
 
     public void UpdatePoint(string f1, string f2, string f3, Vector2 domain_s)
@@ -192,34 +213,69 @@ public class GameManager : MonoBehaviour
 
 
         SetPointActive();
+        scan = (_s_current_domain.x + _s_current_domain.y) / 2;
         _point.UpdatePlot(_s);
     }
 
-    public void UpdateRange(Vector3 min, Vector3 max)
+    public void UpdateRange(Vector3 direction)
     {
-        _range_min = min;
-        _range_max = max;
 
-        if (_plane != null)
+
+        //aktuellen Scan-Faktor merken
+        //float s_temp = _s;
+
+
+
+        //Verschiebung an Boxgröße und Skalierungsfaktor anpassen
+        Vector3 normalizedDirection = Vector3.Scale(direction, _boxScale);
+        normalizedDirection = Vector3.Scale(normalizedDirection, new Vector3(0.25f, 0.125f, 0.25f));
+
+
+
+        //MoveSpeed
+        normalizedDirection = Vector3.Scale(normalizedDirection, new Vector3(_moveSpeed, _moveSpeed, _moveSpeed));
+
+
+
+        _range_min += normalizedDirection;
+        _range_max += normalizedDirection;
+
+        _axisLabeling.UpdateLabeling(_range_min, _range_max);
+
+        if (_activePlot is PlotR3toR)
         {
-            Destroy(_plane.plot.curves);
+            if (_plane != null)
+            {
+                Destroy(_plane.plot.curves);
+            }
+
             _plane = CreatePlane();
-            if (_activePlot is PlotR3toR) SetPlaneActive();
+
+            SetPlaneActive();
         }
 
-        if (_curve != null)
+        if (_activePlot is PlotR2toR2)
         {
-            Destroy(_curve.plot.curves);
+            Destroy(_activePlot.plot.curves);
             _curve = CreateCurve();
-            if (_activePlot is PlotR2toR2) SetCurveActive();
+            SetCurveActive();
         }
 
-        if (_point != null)
+        if (_activePlot is PlotRtoR3)
         {
-            Destroy(_point.plot.curves);
+            Destroy(_activePlot.plot.curves);
             _point = CreatePoint();
-            if (_activePlot is PlotRtoR3) SetPointActive();
+            SetPointActive();
+            
         }
+
+        if (_activePlot != null)
+        {
+            if (!(_activePlot is PlotRtoR3)) Destroy(_activePlot.plot.curves);
+            _activePlot.UpdatePlot(_s);
+            Debug.Log($"changed s-value to {_s}");
+        }
+
 
     }
 
@@ -259,16 +315,4 @@ public class GameManager : MonoBehaviour
 
 
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

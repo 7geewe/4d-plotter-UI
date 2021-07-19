@@ -8,18 +8,33 @@ public class ScanInputListener : MonoBehaviour
 
     public InputActionReference scanReference = null;
 
-    private int _timesInvoked = 0, _timesChanged = 0;
+
+    private int _timesInvoked = 0, _timesChanged = 0, _timesInvokedMove = 0, framesPerScan;
+
+    private Vector3 _controllerPos, _moveDirection;
+
+    private bool _moving = false;
 
 
     private void Awake()
     {
         scanReference.action.performed += ScanPlot;
+
+
+
+    }
+
+    private void OnDestroy()
+    {
+        scanReference.action.performed -= ScanPlot;
+
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
-
+        framesPerScan = GameManager.instance._framesPerScan;
     }
 
     // Update is called once per frame
@@ -27,6 +42,9 @@ public class ScanInputListener : MonoBehaviour
     {
 
     }
+
+
+
 
     private void ScanPlot(InputAction.CallbackContext context)
     {
@@ -36,7 +54,7 @@ public class ScanInputListener : MonoBehaviour
 
         if (pos != 0f)
         {
-            if ((_timesInvoked % GameManager.instance._framesPerScan) == 0)
+            if ((_timesInvoked % framesPerScan) == 0)
             {
                 _timesChanged++;
                 GameManager.instance.ScanPlot(pos);
