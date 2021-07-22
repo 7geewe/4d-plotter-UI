@@ -11,7 +11,7 @@ public class FunctionInputManager : MonoBehaviour
     public VRInputField _planeInputField, _curveInputField1, _pointInputField1;
     private VRInputField _currentInputField;
 
-    public Button _x, _z;
+    public GameObject _x, _z;
 
     public Text _test;
 
@@ -30,12 +30,19 @@ public class FunctionInputManager : MonoBehaviour
     //box
     public Text _x_axis, _y_axis, _z_axis;
 
+
+    //InfoPad
+    public GameObject _infoPad;
+    private InfoPadController IPController;
+
     // Start is called before the first frame update
 
 
     void Start()
     {
-        
+        //damit VR Inputfield aktiviert ist
+        SetActiveField(_planeInputField);
+        IPController = _infoPad.GetComponent<InfoPadController>();
     }
 
     // Update is called once per frame
@@ -49,6 +56,7 @@ public class FunctionInputManager : MonoBehaviour
         _y_axis.text = $"y = {_f.text}";
         _z_axis.text = "z";
 
+        IPController.SetPlaneF(_f.text);
 
         if (_v_x.IsActive())
         {
@@ -63,6 +71,10 @@ public class FunctionInputManager : MonoBehaviour
         Vector2 domain_z = new Vector2(float.Parse(_z_min_plane.text), float.Parse(_z_max_plane.text));
 
         GameManager.instance.UpdatePlane(f, domain_s, domain_x, domain_z);
+
+        
+
+        
 
 
 
@@ -85,6 +97,8 @@ public class FunctionInputManager : MonoBehaviour
         _y_axis.text = $"y = {_f2_curve.text}";
         _z_axis.text = "z";
 
+        IPController.SetCurveF(_f1_curve.text, _f2_curve.text);
+
         string f1 = CreateJaceExpr(_f1_curve.text);
         string f2 = CreateJaceExpr(_f2_curve.text);
         Vector2 domain_s = new Vector2(float.Parse(_s_min_curve.text), float.Parse(_s_max_curve.text));
@@ -98,6 +112,8 @@ public class FunctionInputManager : MonoBehaviour
         _x_axis.text = $"x = {_f1_point.text}";
         _y_axis.text = $"y = {_f2_point.text}";
         _z_axis.text = $"z = {_f3_point.text}";
+
+        IPController.SetPointF(_f1_point.text, _f2_point.text, _f3_point.text);
 
         string f1 = CreateJaceExpr(_f1_point.text);
         string f2 = CreateJaceExpr(_f2_point.text);
@@ -222,8 +238,8 @@ public class FunctionInputManager : MonoBehaviour
         _point_p.SetActive(false);
         _plane_p.SetActive(false);
         _landingPage.SetActive(true);
-        _x.interactable = true;
-        _z.interactable = true;
+        _x.SetActive(true);
+        _z.SetActive(true);
     }
     
     public void PlanePressed()
@@ -232,8 +248,8 @@ public class FunctionInputManager : MonoBehaviour
         _curve_p.SetActive(false);
         _point_p.SetActive(false);
         _plane_p.SetActive(true);
-        _x.interactable = true;
-        _z.interactable = true;
+        _x.SetActive(true);
+        _z.SetActive(true);
     }
     public void CurvePressed()
     {
@@ -241,8 +257,8 @@ public class FunctionInputManager : MonoBehaviour
         _point_p.SetActive(false);
         _plane_p.SetActive(false);
         _curve_p.SetActive(true);
-        _x.interactable = true;
-        _z.interactable = false;
+        _x.SetActive(true);
+        _z.SetActive(false);
     }
 
 
@@ -252,8 +268,8 @@ public class FunctionInputManager : MonoBehaviour
         _curve_p.SetActive(false);
         _plane_p.SetActive(false);
         _point_p.SetActive(true);
-        _x.interactable = false;
-        _z.interactable = false;
+        _x.SetActive(false);
+        _z.SetActive(false);
 
     }
 

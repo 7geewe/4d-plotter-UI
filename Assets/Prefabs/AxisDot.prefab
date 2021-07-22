@@ -29,7 +29,7 @@ RectTransform:
   m_GameObject: {fileID: 46875462064833742}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.008824524, y: 0.008824524, z: 0.008824524}
+  m_LocalScale: {x: 0.0062074345, y: 0.0062074345, z: 0.0062074345}
   m_Children:
   - {fileID: 3587831922533660385}
   m_Father: {fileID: 4734023226525464864}
@@ -37,7 +37,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -5.32, y: 0}
+  m_AnchoredPosition: {x: -4.8, y: 0}
   m_SizeDelta: {x: 898, y: 551}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &4101154449940537625
@@ -139,8 +139,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3051552070185620858}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.082638, y: 0.64172, z: 0.64172}
+  m_LocalPosition: {x: -1.1599998, y: 0, z: 0}
+  m_LocalScale: {x: 2.645367, y: 0.81511277, z: 0.81511277}
   m_Children: []
   m_Father: {fileID: 4734023226525464864}
   m_RootOrder: 0
@@ -171,7 +171,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: aaa4acc1506f63b4f993bc5dfea2f366, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

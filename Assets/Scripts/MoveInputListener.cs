@@ -5,10 +5,15 @@ using UnityEngine.InputSystem;
 
 public class MoveInputListener : MonoBehaviour
 {
+    public InputActionReference uiPlaceReference = null;
+    public GameObject _inputUI;
+
+
     public InputActionReference moveReference = null;
     public InputActionProperty leftHandPosition;
+    public InputActionProperty playerPosition;
 
-    private int _timesInvoked = 0, _timesChanged = 0, _timesInvokedMove = 0, framesPerScan;
+    private int _timesInvoked = 0, framesPerScan;
 
     private Vector3 _controllerPos, _moveDirection;
 
@@ -43,12 +48,14 @@ public class MoveInputListener : MonoBehaviour
     {
         moveReference.action.started += StartMoving;
         moveReference.action.canceled += StopMoving;
+        uiPlaceReference.action.performed += PlaceUI;
     }
 
     private void OnDestroy()
     {
         moveReference.action.started -= StartMoving;
         moveReference.action.canceled -= StopMoving;
+        uiPlaceReference.action.performed -= PlaceUI;
     }
 
     private void StartMoving(InputAction.CallbackContext context)
@@ -56,11 +63,21 @@ public class MoveInputListener : MonoBehaviour
 
         _moving = true;
         _controllerPos = leftHandPosition.action.ReadValue<Vector3>();
-        _timesInvokedMove = 0;
+        _timesInvoked = 0;
         //Debug.Log($"Start Moving. Controller at {_controllerPos.x},{_controllerPos.y},{_controllerPos.z}");
     }
     private void StopMoving(InputAction.CallbackContext context)
     {
         _moving = false;
+    }
+
+    private void PlaceUI(InputAction.CallbackContext context)
+    {
+        _inputUI.transform.position = leftHandPosition.action.ReadValue<Vector3>();
+
+        Vector3 pos = playerPosition.action.ReadValue<Vector3>();
+
+        _inputUI.transform.LookAt(pos);
+        _inputUI.transform.localRotation *= Quaternion.Euler(0, 180, 0);
     }
 }

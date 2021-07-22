@@ -228,7 +228,7 @@ public class GameManager : MonoBehaviour
 
         //Verschiebung an Boxgröße und Skalierungsfaktor anpassen
         Vector3 normalizedDirection = Vector3.Scale(direction, _boxScale);
-        normalizedDirection = Vector3.Scale(normalizedDirection, new Vector3(0.25f, 0.125f, 0.25f));
+        normalizedDirection = Vector3.Scale(normalizedDirection, new Vector3(0.25f, 0.25f, 0.25f));
 
 
 
@@ -237,6 +237,12 @@ public class GameManager : MonoBehaviour
 
 
 
+        //Studienspezifisch: Swap x and z Axis
+        /**
+        float x = normalizedDirection.x;
+        normalizedDirection.x = normalizedDirection.z;
+        normalizedDirection.z = -x;
+        **/
         _range_min += normalizedDirection;
         _range_max += normalizedDirection;
 

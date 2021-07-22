@@ -199,6 +199,7 @@ public class PlotRtoR3 : ScalingPlot
     private GameObject sphere;
     private Func<float, float[]> f;
     private PlotCalculation calculator;
+    private Material sphereMat = (Material)Resources.Load("SphereMaterial", typeof(Material));
 
     public PlotRtoR3(string[] input, string[] formulas, Vector3[] range, Vector2 domain) : base(range, domain)
     {
@@ -208,6 +209,7 @@ public class PlotRtoR3 : ScalingPlot
         plot = new PlotRtoRn(input, formulas, _range, _domain_s);
         sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         sphere.transform.localScale = new Vector3(0.03f, 0.03f, 0.03f);
+        sphere.GetComponent<MeshRenderer>().material = sphereMat;
 
         plot.MoveAndScale();
         UpdatePlot((_domain_s.x + _domain_s.y) / 2f);

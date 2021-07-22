@@ -9,16 +9,16 @@ public class ScanInputListener : MonoBehaviour
     public InputActionReference scanReference = null;
 
 
-    private int _timesInvoked = 0, _timesChanged = 0, _timesInvokedMove = 0, framesPerScan;
+    private int _timesInvoked = 0, _timesChanged = 0, framesPerScan;
 
     private Vector3 _controllerPos, _moveDirection;
 
-    private bool _moving = false;
 
 
     private void Awake()
     {
         scanReference.action.performed += ScanPlot;
+
 
 
 

@@ -557,6 +557,17 @@
                 },
                 {
                     "name": "",
+                    "id": "32ef53e3-3ae5-4b51-8763-101e0d13696e",
+                    "path": "<XRController>{RightHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UI Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "f029d63b-61df-46ba-b778-4c69688fdadb",
                     "path": "<XRController>{RightHand}/Primary2DAxis",
                     "interactions": "",
@@ -631,6 +642,22 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "HideUI",
+                    "type": "Button",
+                    "id": "e3ce452c-96b9-4e73-b51b-d5592d6ee41e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "PlaceUI",
+                    "type": "Button",
+                    "id": "3c7a302d-8169-408e-ae42-2622ab9172bc",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -653,6 +680,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6c1484b9-7106-48a0-8666-b03f460f9c7b",
+                    "path": "<OculusTouchController>{LeftHand}/secondaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HideUI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6e7d9b44-2e78-4f36-aceb-f09b436642ed",
+                    "path": "<OculusTouchController>{LeftHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PlaceUI",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

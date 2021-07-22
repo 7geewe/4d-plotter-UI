@@ -31,7 +31,6 @@ public class PlotDrawer
         lr.useWorldSpace = false;
         lr.generateLightingData = true;
         lr.startColor = Color.cyan;
-        Material plotMat = (Material)Resources.Load("PlotMaterial", typeof(Material));
         lr.material = plotMat;
         return curve_obj;
     }

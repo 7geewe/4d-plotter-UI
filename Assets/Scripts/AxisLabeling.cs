@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AxisDot : MonoBehaviour
+public class AxisLabeling : MonoBehaviour
 {
 
     public GameObject axisDot;
     private float box_radius = 0.5f;
     private Vector3 x_axis_position, x_axis_rotation, y_axis_position, y_axis_rotation, z_axis_position, z_axis_rotation;
-    private GameObject _labeling, _box;
+    private GameObject _box;
+    private List<GameObject> _labeling = new List<GameObject>();
     private Camera _mainCamera;
 
 
@@ -36,9 +37,9 @@ public class AxisDot : MonoBehaviour
 
     public void UpdateLabeling(Vector3 range_min, Vector3 range_max)
     {
-        if (_labeling != null)
+        foreach (GameObject g in _labeling)
         {
-            Destroy(_labeling);
+            Destroy(g);
         }
 
         CreateFullLegend(range_min, range_max);
@@ -51,18 +52,19 @@ public class AxisDot : MonoBehaviour
 
     private void CreateDot(float t, Vector3 pos, Vector3 rot)
     {
-        _labeling = Instantiate(axisDot);
-        _labeling.GetComponentInChildren<Canvas>().worldCamera = _mainCamera;
-        _labeling.GetComponentInChildren<Text>().text = t.ToString();
-        _labeling.transform.SetParent(_box.transform);
-        _labeling.transform.localPosition = pos;
-        _labeling.transform.localRotation *= Quaternion.Euler(rot);
+        GameObject dot = Instantiate(axisDot);
+        dot.GetComponentInChildren<Canvas>().worldCamera = _mainCamera;
+        dot.GetComponentInChildren<Text>().text = t.ToString();
+        dot.transform.SetParent(_box.transform);
+        dot.transform.localPosition = pos;
+        dot.transform.localRotation *= Quaternion.Euler(rot);
+        _labeling.Add(dot);
     }
 
 
     private float CalcNewPoint(Vector2 range, float point)
     {
-        return (point - range.x)/(range.y-range.x) * 2 * box_radius - box_radius; //Berechnet n-Koordinate für Beschriftungspunkt auf n-Achse, abhängig von der Achsenskalierung und Boxgröße
+        return (point - range.x) / (range.y - range.x) * 2 * box_radius - box_radius; //Berechnet n-Koordinate für Beschriftungspunkt auf n-Achse, abhängig von der Achsenskalierung und Boxgröße
     }
 
 
@@ -74,10 +76,10 @@ public class AxisDot : MonoBehaviour
         Vector2 y_range = new Vector2(range_min.y, range_max.y);
         Vector2 z_range = new Vector2(range_min.z, range_max.z);
 
-        
-        
-        
-        foreach(float i in LegendPoints(x_range, 0.5f))
+
+
+
+        foreach (float i in LegendPoints(x_range, 0.5f))
         {
             CreateDot_x(i, x_range);
         }
@@ -100,14 +102,20 @@ public class AxisDot : MonoBehaviour
     {
         List<float> res = new List<float>();
 
-        float range_length = range.y - range.x;
-        for (float i = space; i <= range_length-space*0.2; i += space)
+        float start = Mathf.Ceil(range.x * 2f) / 2f;
+        float end = Mathf.Floor(range.y * 2f) / 2f;
+
+
+        for (float i = start; i <= end; i += space)
         {
-            res.Add(i + range.x);
+            res.Add(i);
         }
+
         return res;
 
     }
+
+
 
     private void CreateDot_x(float point, Vector2 range)
     {
