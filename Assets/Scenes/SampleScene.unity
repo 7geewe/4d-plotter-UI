@@ -18622,7 +18622,6 @@ GameObject:
   m_Component:
   - component: {fileID: 924091219}
   - component: {fileID: 924091220}
-  - component: {fileID: 924091221}
   m_Layer: 0
   m_Name: FunctionInputManager
   m_TagString: Untagged
@@ -18691,31 +18690,6 @@ MonoBehaviour:
   _y_axis: {fileID: 785196232}
   _z_axis: {fileID: 927750426}
   _infoPad: {fileID: 1337836931}
---- !u!114 &924091221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 924091218}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 946f733d0c302ce439c55e947b49decd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: {fileID: 0}
-  R1toR3: []
-  R2toR2: []
-  R3toR1: []
-  variables: []
-  scale: 0
-  direction: []
-  range_min: {x: 0, y: 0, z: 0}
-  range_max: {x: 0, y: 0, z: 0}
-  range: []
-  domain_x: {x: 0, y: 0}
-  domain_y: {x: 0, y: 0}
-  domain_z: {x: 0, y: 0}
 --- !u!1 &927750424
 GameObject:
   m_ObjectHideFlags: 0
