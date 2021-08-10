@@ -37,35 +37,3 @@ public class PlotDrawer
 
 }
 
-/**
- * TODOS:
- *      Farbauswahl ermöglichen
- *      Material erzeugen und standardmäßig zuweisen
- *          -Prefab für Curve-Obejct? Name von Material suchen und zuweisen? Textur??
- *      Koordinatensystem bauen
- *          dynamische Achsenbeschriftungen
- *          
- *      
- *      Creator, Calculator, Drawer als normale Klassen -> keine Monobehaviors
- *    
- *          
- *      neue Funktion: beim R2->R2 skalieren Kurven stehenlassen an/aus ODER von vornherein gesamten Plot zeichnen mit markiertem aktuellen Kurve
- *          R2->R2 Doppelebene ermöglichen
- *      
- *      Anzeigen aktueller Parameter
- *      
- *      Klasse für Skalieren entlang Gerade -> einbauen als eigenen Konstruktor in R3->R -> Done
- *      Klassen für 3, 2 und 1-Dimensionale Plots -> DONE
- *      Fallunterscheidung Nutzereingabe
- *          möglichst direkt halten -> lieber eine lange unterscheidung, die eibnmalig stattfindet, als dauerhafte Unterscheidung
- *          
- *      Klasse für Skalieren
- *      
- *      
- *      STILL OFFEN:
-            Überprüfung von Punkt-Koordínaten -> außerhalb des Bereichs?? Keine Zahl?? Div durch 0???
-                -außerhalb des Bereichs abschneiden DONE
- *      
- * 
- * 
- * */

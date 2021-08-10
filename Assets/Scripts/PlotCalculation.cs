@@ -215,35 +215,3 @@ public class PlotCalculation
 
 }
 
-/**
- * TODOS:
- * Skalierung von Wertebereich
- *      -> automatisch anhand Intervall? -> find highest point
- *      -> vorerst via Nutzereingabe bzw festgelegt?
- *      -> angabe von Definitionsbereich bei jeder Funktion? z.B. logarithmus
- *      -> Error Handling für falsche Definitionsbereiche (z.B. log mit Zahlen unter 0)
- *      
- * Aufschneiden von Funktionskurve in merhere Kurven, wenn Limit erreicht ist
- *      -> je nach dem, wo das passiert, kann Rückgabetyp von PlotFunction zu Curve anstatt Curves werden
- *      
- *      
- * Fehlerhandling von falschen Punkten
- *      2 Möglichkeiten:
- *          Außerhalb des Wertebereichs
- *          keine Zahl (NaN, inf, Div0 etc.)
- *    --> diese abfangen und Kurven splitten (müssen per Def. zusammenhängende Punkte sein)
- *    --->ggf. neue Punkte an DefbereichGrenze setzen
- *      
- * 
- * 
- * 
- * R->R   f(x) = x^2 -> Kurve
- * R->R2   f(x) = (x^2, x^3) Kurve 
- * R->R3    f(x) = (x^2, x^3, x^4) Kurve
- * R2->R    f(x,y) = x*y -> Ebene
- * 
- * 
- * 
- * 
- * 
- * */
